@@ -19,7 +19,19 @@
 # Create a new menu option that shows a report containing:
 # Show each employee and their details (name, phone, address, position, salary, slack account, github account)
 
+require "csv"
+
 @people = []
+#set up saving to CSV file
+def save_employees
+  csv = CSV.open("employees.csv", "w")
+  csv.add_row ["name","phone","address"]
+  @people.each do |person|
+    csv.add_row [person.name, person.phone, person.address]
+  end
+
+  csv.close
+end
 
 def get_info (data)
   print "#{data} "
@@ -245,3 +257,5 @@ Maybe you spelled it wrong, or started the program over.
 
 
 end
+
+save_employees
