@@ -1,6 +1,6 @@
 # ✅ All your searching and deleting methods should use enumerable instead of loop
-# ❌ The application should read the existing employees from a csv file named employees.csv
-# ❌ Your initial employees.csv should look like this (e.g. create this the same time you create your database.rb file) -- It is ok and expected this file will change as you add and delete employees:
+# ✅ The application should read the existing employees from a csv file named employees.csv
+# ✅ Your initial employees.csv should look like this (e.g. create this the same time you create your database.rb file) -- It is ok and expected this file will change as you add and delete employees:
 #     --name,phone,address,position,salary,slack,github
 #     --Gavin,555-1212,1 Main Street,Instructor,1000000,gstark,gstark
 #     --Jason,555-4242,500 Elm Street,Instructor,2000000,ambethia,ambethia
@@ -21,27 +21,6 @@
 require "csv"
 
 @people = []
-# set up saving to CSV file
-def save_employees
-  csv = CSV.open("employees.csv", "w")
-  csv.add_row ["name","phone","address","position","salary","slack","github"]
-  @people.each do |person|
-    csv.add_row [person.name, person.phone, person.address, person.position, person.salary, person.slack, person.github]
-  end
-  csv.close
-end
-
-# searches for a person by name. will select and return any person with matching searched name
-def search (person_name)
-  found_people = @people.select { |person| person.name == person_name }
-  return found_people
-end
-
-# "data" gets a response from user and returns said response
-def get_info (data)
-  print "#{data} "
-  gets.chomp
-end
 
 class Person
   attr_accessor :name, :phone, :address, :position, :salary, :slack, :github
@@ -55,6 +34,42 @@ class Person
     @slack = slack
     @github = github
   end
+end
+
+# set up saving to CSV file
+def save_employees
+  csv = CSV.open("employees.csv", "w")
+  csv.add_row ["name","phone","address","position","salary","slack","github"]
+  @people.each do |person|
+    csv.add_row [person.name, person.phone, person.address, person.position, person.salary, person.slack, person.github]
+  end
+  csv.close
+end
+
+# Open the csv file and read all the rows, creating a new person that I will put in @people
+CSV.foreach("employees.csv", headers:true) do |person|
+  name = person["name"]
+  phone = person["phone"]
+  address = person["address"]
+  position = person["position"]
+  salary = person["salary"]
+  slack = person["slack"]
+  github = person["github"]
+  person = Person.new(name, phone, address, position, salary, slack, github)
+  @people << person
+  save_employees
+end
+
+# searches for a person by name. will select and return any person with matching searched name
+def search (person_name)
+  found_people = @people.select { |person| person.name == person_name }
+  return found_people
+end
+
+# "data" gets a response from user and returns said response
+def get_info (data)
+  print "#{data} "
+  gets.chomp
 end
 
 # puts "
