@@ -41,8 +41,8 @@ CSV.foreach("employees.csv", headers:true) do |person|
 end
 
 # searches for a person by name. will select and return any person with matching searched name
-def search (person_name)
-  found_people = @people.select { |person| person.name == person_name }
+def search (search_input)
+  found_people = @people.select { |person| person.name.include?(search_input) || person.slack == search_input || person.github == search_input }
   return found_people
 end
 
@@ -52,41 +52,41 @@ def get_info (data)
   gets.chomp
 end
 
-# puts "
-# TTTTTTTTTTTTTTTTTTTTTTT IIIIIIIIII YYYYYYY       YYYYYYY                  DDDDDDDDDDDDD                                   tttt
-# T:::::::::::::::::::::T I::::::::I Y:::::Y       Y:::::Y                  D::::::::::::DDD                             ttt:::t
-# T:::::::::::::::::::::T I::::::::I Y:::::Y       Y:::::Y                  D:::::::::::::::DD                           t:::::t
-# T:::::TT:::::::TT:::::T II::::::II Y::::::Y     Y::::::Y                  DDD:::::DDDDD:::::D                          t:::::t
-# TTTTTT  T:::::T  TTTTTT   I::::I   YYY:::::Y   Y:::::YYY                    D:::::D    D:::::D   aaaaaaaaaaaaa   ttttttt:::::ttttttt       aaaaaaaaaaaaa
-#         T:::::T           I::::I      Y:::::Y Y:::::Y                       D:::::D     D:::::D  a::::::::::::a  t:::::::::::::::::t       a::::::::::::a
-#         T:::::T           I::::I       Y:::::Y:::::Y                        D:::::D     D:::::D  aaaaaaaaa:::::a t:::::::::::::::::t       aaaaaaaaa:::::a
-#         T:::::T           I::::I        Y:::::::::Y      ---------------    D:::::D     D:::::D           a::::a tttttt:::::::tttttt                a::::a
-#         T:::::T           I::::I         Y:::::::Y       -:::::::::::::-    D:::::D     D:::::D    aaaaaaa:::::a       t:::::t               aaaaaaa:::::a
-#         T:::::T           I::::I          Y:::::Y        ---------------    D:::::D     D:::::D  aa::::::::::::a       t:::::t             aa::::::::::::a
-#         T:::::T           I::::I          Y:::::Y                           D:::::D     D:::::D a::::aaaa::::::a       t:::::t            a::::aaaa::::::a
-#         T:::::T           I::::I          Y:::::Y                           D:::::D    D:::::D a::::a    a:::::a       t:::::t    tttttt a::::a    a:::::a
-#       TT:::::::TT       II::::::II        Y:::::Y                         DDD:::::DDDDD:::::D  a::::a    a:::::a       t::::::tttt:::::t a::::a    a:::::a
-#       T:::::::::T       I::::::::I     YYYY:::::YYYY                      D:::::::::::::::DD   a:::::aaaa::::::a       tt::::::::::::::t a:::::aaaa::::::a
-#       T:::::::::T       I::::::::I     Y:::::::::::Y                      D::::::::::::DDD      a::::::::::aa:::a        tt:::::::::::tt  a::::::::::aa:::a
-#       TTTTTTTTTTT       IIIIIIIIII     YYYYYYYYYYYYY                      DDDDDDDDDDDDD          aaaaaaaaaa  aaaa          ttttttttttt     aaaaaaaaaa  aaaa
-#
-#                           BBBBBBBBBBBBBBBBB
-#                           B::::::::::::::::B
-#                           B::::::BBBBBB:::::B
-#                           BB:::::B     B:::::B
-#                             B::::B     B:::::B            aaaaaaaaaaaaa                 ssssssssss                 eeeeeeeeeeee
-#                             B::::B     B:::::B            a::::::::::::a              ss::::::::::s              ee::::::::::::ee
-#                             B::::BBBBBB:::::B             aaaaaaaaa:::::a           ss:::::::::::::s            e::::::eeeee:::::ee
-#                             B:::::::::::::BB                       a::::a           s::::::ssss:::::s          e::::::e     e:::::e
-#                             B::::BBBBBB:::::B               aaaaaaa:::::a            s:::::s  ssssss           e:::::::eeeee::::::e
-#                             B::::B     B:::::B            aa::::::::::::a              s::::::s                e:::::::::::::::::e
-#                             B::::B     B:::::B           a::::aaaa::::::a                 s::::::s             e::::::eeeeeeeeeee
-#                             B::::B     B:::::B          a::::a    a:::::a           ssssss   s:::::s           e:::::::e
-#                           BB:::::BBBBBB::::::B          a::::a    a:::::a           s:::::ssss::::::s          e::::::::e
-#                           B:::::::::::::::::B           a:::::aaaa::::::a           s::::::::::::::s            e::::::::eeeeeeee
-#                           B::::::::::::::::B             a::::::::::aa:::a           s:::::::::::ss              ee:::::::::::::e
-#                           BBBBBBBBBBBBBBBBB               aaaaaaaaaa  aaaa            sssssssssss                  eeeeeeeeeeeeee
-# "
+puts "
+ TTTTTTTTTTTTTTTTTTTTTTT IIIIIIIIII YYYYYYY       YYYYYYY                  DDDDDDDDDDDDD                                   tttt
+ T:::::::::::::::::::::T I::::::::I Y:::::Y       Y:::::Y                  D::::::::::::DDD                             ttt:::t
+ T:::::::::::::::::::::T I::::::::I Y:::::Y       Y:::::Y                  D:::::::::::::::DD                           t:::::t
+ T:::::TT:::::::TT:::::T II::::::II Y::::::Y     Y::::::Y                  DDD:::::DDDDD:::::D                          t:::::t
+ TTTTTT  T:::::T  TTTTTT   I::::I   YYY:::::Y   Y:::::YYY                    D:::::D    D:::::D   aaaaaaaaaaaaa   ttttttt:::::ttttttt       aaaaaaaaaaaaa
+         T:::::T           I::::I      Y:::::Y Y:::::Y                       D:::::D     D:::::D  a::::::::::::a  t:::::::::::::::::t       a::::::::::::a
+         T:::::T           I::::I       Y:::::Y:::::Y                        D:::::D     D:::::D  aaaaaaaaa:::::a t:::::::::::::::::t       aaaaaaaaa:::::a
+         T:::::T           I::::I        Y:::::::::Y      ---------------    D:::::D     D:::::D           a::::a tttttt:::::::tttttt                a::::a
+         T:::::T           I::::I         Y:::::::Y       -:::::::::::::-    D:::::D     D:::::D    aaaaaaa:::::a       t:::::t               aaaaaaa:::::a
+         T:::::T           I::::I          Y:::::Y        ---------------    D:::::D     D:::::D  aa::::::::::::a       t:::::t             aa::::::::::::a
+         T:::::T           I::::I          Y:::::Y                           D:::::D     D:::::D a::::aaaa::::::a       t:::::t            a::::aaaa::::::a
+         T:::::T           I::::I          Y:::::Y                           D:::::D    D:::::D a::::a    a:::::a       t:::::t    tttttt a::::a    a:::::a
+       TT:::::::TT       II::::::II        Y:::::Y                         DDD:::::DDDDD:::::D  a::::a    a:::::a       t::::::tttt:::::t a::::a    a:::::a
+       T:::::::::T       I::::::::I     YYYY:::::YYYY                      D:::::::::::::::DD   a:::::aaaa::::::a       tt::::::::::::::t a:::::aaaa::::::a
+       T:::::::::T       I::::::::I     Y:::::::::::Y                      D::::::::::::DDD      a::::::::::aa:::a        tt:::::::::::tt  a::::::::::aa:::a
+       TTTTTTTTTTT       IIIIIIIIII     YYYYYYYYYYYYY                      DDDDDDDDDDDDD          aaaaaaaaaa  aaaa          ttttttttttt     aaaaaaaaaa  aaaa
+
+                           BBBBBBBBBBBBBBBBB
+                           B::::::::::::::::B
+                           B::::::BBBBBB:::::B
+                           BB:::::B     B:::::B
+                             B::::B     B:::::B            aaaaaaaaaaaaa                 ssssssssss                 eeeeeeeeeeee
+                             B::::B     B:::::B            a::::::::::::a              ss::::::::::s              ee::::::::::::ee
+                             B::::BBBBBB:::::B             aaaaaaaaa:::::a           ss:::::::::::::s            e::::::eeeee:::::ee
+                             B:::::::::::::BB                       a::::a           s::::::ssss:::::s          e::::::e     e:::::e
+                             B::::BBBBBB:::::B               aaaaaaa:::::a            s:::::s  ssssss           e:::::::eeeee::::::e
+                             B::::B     B:::::B            aa::::::::::::a              s::::::s                e:::::::::::::::::e
+                             B::::B     B:::::B           a::::aaaa::::::a                 s::::::s             e::::::eeeeeeeeeee
+                             B::::B     B:::::B          a::::a    a:::::a           ssssss   s:::::s           e:::::::e
+                           BB:::::BBBBBB::::::B          a::::a    a:::::a           s:::::ssss::::::s          e::::::::e
+                           B:::::::::::::::::B           a:::::aaaa::::::a           s::::::::::::::s            e::::::::eeeeeeee
+                           B::::::::::::::::B             a::::::::::aa:::a           s:::::::::::ss              ee:::::::::::::e
+                           BBBBBBBBBBBBBBBBB               aaaaaaaaaa  aaaa            sssssssssss                  eeeeeeeeeeeeee
+ "
 
 loop do
 
@@ -102,20 +102,20 @@ loop do
     *             Exit  -  Exit the program              *
     *                                                    *
     ******************************************************
-    "
+
+"
   print "(Search/Add/Delete/View/Exit)?   "
   response = gets.chomp
 
   case response
     when "s", "s.", "search", "search.", "S", "S.", "Search", "Search.", "SEARCH", "SEARCH."
-      searched_name = get_info ("Who's profile would you like to see?")
-      p searched_name
+      searched_name = get_info ("Who's profile would you like to see? You can search by name, slack, or github.")
       # Returns 0, 1, or more employees that match that name
       people = search(searched_name)
 
-#     20.times do
-#       puts ""
-#     end
+      20.times do
+        puts ""
+      end
 
       if people.empty?
         puts "
@@ -130,7 +130,7 @@ loop do
         # search method we ran earlier
         people.each do |person|
           puts "
- #{person.name}'s
+#{person.name}'s
             phone is     :   #{person.phone}
             address is   :   #{person.address}
             position is  :   #{person.position}
@@ -140,42 +140,47 @@ loop do
 "
         end
       end
-#      20.times do
-#        puts ""
-#      end
+      20.times do
+        puts ""
+      end
 
     when "a", "a.", "add", "add.", "A", "A.", "Add", "Add.", "ADD", "ADD."
       name = get_info ("What is their name?")
-      phone = get_info ("What is their phone number?")
-      address = get_info ("What is their address?")
-      position = get_info ("What is their position?")
-      salary = get_info ("What is their salary?")
-      slack = get_info ("What is their slack?")
-      github = get_info ("What is their github?")
-      person = Person.new(name, phone, address, position, salary, slack, github)
-      @people << person
-      save_employees
-#      20.times do
-#        puts ""
-#      end
-      puts "
-    ********************************************
-    *                                          *
-    *  The employee profile has been created!  *
-    *                                          *
-    ********************************************
-      "
-#      20.times do
-#        puts ""
-#      end
+      matching_person = @people.select {|person| person.name == name}
+      if matching_person.any?
+        puts "Sorry, an employee profile already exists with that name."
+      else
+        phone = get_info ("What is their phone number?")
+        address = get_info ("What is their address?")
+        position = get_info ("What is their position?")
+        salary = get_info ("What is their salary?")
+        slack = get_info ("What is their slack?")
+        github = get_info ("What is their github?")
+        person = Person.new(name, phone, address, position, salary, slack, github)
+        @people << person
+        save_employees
+        20.times do
+          puts ""
+        end
+        puts "
+          ********************************************
+          *                                          *
+          *  The employee profile has been created!  *
+          *                                          *
+          ********************************************
+          "
+        20.times do
+          puts ""
+        end
+      end
 
     when "d", "d.", "delete", "delete.", "D", "D.", "Delete", "Delete.", "DELETE", "DELETE."
       delete_name = get_info ("Who's profile would you like to delete?")
       people = search (delete_name)
       if people.empty?
-#       20.times do
-#         puts ""
-#       end
+        20.times do
+          puts ""
+        end
         puts "
     ***************************************
     *                                     *
@@ -183,16 +188,16 @@ loop do
     *                                     *
     ***************************************
           "
-#       20.times do
-#         puts ""
-#       end
+        20.times do
+          puts ""
+        end
       else
         people.each do |person|
           @people.delete(person)
         end
-#       20.times do
-#         puts ""
-#       end
+        20.times do
+          puts ""
+        end
         puts "
    ********************************************
    *                                          *
@@ -200,16 +205,16 @@ loop do
    *                                          *
    ********************************************
           "
-#       20.times do
-#         puts ""
-#       end
+        20.times do
+          puts ""
+        end
         save_employees
       end
 
     when "v", "v.", "view", "view.", "V", "V.", "View", "View.", "VIEW", "VIEW."
       @people.each do |person|
         puts "
- #{person.name}'s
+#{person.name}'s
           phone is     :   #{person.phone}
           address is   :   #{person.address}
           position is  :   #{person.position}
@@ -222,9 +227,9 @@ loop do
     when "x", "x.", "exit", "exit.", "X", "X.", "Exit", "Exit.", "EXIT", "EXIT."
       break
     else
-#      20.times do
-#        puts ""
-#      end
+      20.times do
+        puts ""
+      end
       puts "
   **********************************************************************************
   *                                                                                *
@@ -232,8 +237,8 @@ loop do
   *                                                                                *
   **********************************************************************************
       "
-#      20.times do
-#        puts ""
-#      end
+      20.times do
+        puts ""
+      end
   end
 end

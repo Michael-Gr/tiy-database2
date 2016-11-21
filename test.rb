@@ -8,8 +8,8 @@
 # ✅ The main loop of the application should show a menu of options to the user to include at least: Add a person, Search for a person, Delete a person
 # ✅ HINT: Show the list of options and allow the user to enter A for Add, S for Search and D for Delete
 # ✅ Track the following information: Name, Phone number, Address, Position (e.g. Instructor, Student, TA, Campus Director) , Salary, Slack Account, Github Account
-# ❌ Don't allow creating a new person if their name already exists
-# ❌ When searching for a person, allow for a partial match against the person's name, or the full Slack Account or the full Github Account
+# ✅ Don't allow creating a new person if their name already exists
+# ✅ When searching for a person, allow for a partial match against the person's name, or the full Slack Account or the full Github Account
 # ✅ If the person is found, show all their relevant information.
 # ✅ Show the information in a nice presentation.
 # ✅ If a person is not found, inform the user
@@ -61,8 +61,8 @@ CSV.foreach("employees.csv", headers:true) do |person|
 end
 
 # searches for a person by name. will select and return any person with matching searched name
-def search (person_name)
-  found_people = @people.select { |person| person.name == person_name }
+def search (search_input)
+  found_people = @people.select { |person| person.name.include?(search_input) || person.slack == search_input || person.github == search_input }
   return found_people
 end
 
@@ -129,8 +129,7 @@ loop do
 
   case response
     when "s", "s.", "search", "search.", "S", "S.", "Search", "Search.", "SEARCH", "SEARCH."
-      searched_name = get_info ("Who's profile would you like to see?")
-      p searched_name
+      searched_name = get_info ("Who's profile would you like to see? You can search by name, slack, or github.")
       # Returns 0, 1, or more employees that match that name
       people = search(searched_name)
 
@@ -167,28 +166,33 @@ loop do
 
     when "a", "a.", "add", "add.", "A", "A.", "Add", "Add.", "ADD", "ADD."
       name = get_info ("What is their name?")
-      phone = get_info ("What is their phone number?")
-      address = get_info ("What is their address?")
-      position = get_info ("What is their position?")
-      salary = get_info ("What is their salary?")
-      slack = get_info ("What is their slack?")
-      github = get_info ("What is their github?")
-      person = Person.new(name, phone, address, position, salary, slack, github)
-      @people << person
-      save_employees
-#      20.times do
-#        puts ""
-#      end
-      puts "
-    ********************************************
-    *                                          *
-    *  The employee profile has been created!  *
-    *                                          *
-    ********************************************
-      "
-#      20.times do
-#        puts ""
-#      end
+      matching_person = @people.select {|person| person.name == name}
+      if matching_person.any?
+        puts "Sorry, an employee profile already exists with that name."
+      else
+        phone = get_info ("What is their phone number?")
+        address = get_info ("What is their address?")
+        position = get_info ("What is their position?")
+        salary = get_info ("What is their salary?")
+        slack = get_info ("What is their slack?")
+        github = get_info ("What is their github?")
+        person = Person.new(name, phone, address, position, salary, slack, github)
+        @people << person
+        save_employees
+        #      20.times do
+        #        puts ""
+        #      end
+              puts "
+            ********************************************
+            *                                          *
+            *  The employee profile has been created!  *
+            *                                          *
+            ********************************************
+              "
+        #      20.times do
+        #        puts ""
+        #      end
+      end
 
     when "d", "d.", "delete", "delete.", "D", "D.", "Delete", "Delete.", "DELETE", "DELETE."
       delete_name = get_info ("Who's profile would you like to delete?")
