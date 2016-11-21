@@ -1,23 +1,3 @@
-# ✅ All your searching and deleting methods should use enumerable instead of loop
-# ✅ The application should read the existing employees from a csv file named employees.csv
-# ✅ Your initial employees.csv should look like this (e.g. create this the same time you create your database.rb file) -- It is ok and expected this file will change as you add and delete employees:
-#     --name,phone,address,position,salary,slack,github
-#     --Gavin,555-1212,1 Main Street,Instructor,1000000,gstark,gstark
-#     --Jason,555-4242,500 Elm Street,Instructor,2000000,ambethia,ambethia
-#     --Toni,555-4444,200 Pine Street,Campus Director,3000000,amazing_toni,amazing_toni
-# ✅ The main loop of the application should show a menu of options to the user to include at least: Add a person, Search for a person, Delete a person
-# ✅ HINT: Show the list of options and allow the user to enter A for Add, S for Search and D for Delete
-# ✅ Track the following information: Name, Phone number, Address, Position (e.g. Instructor, Student, TA, Campus Director) , Salary, Slack Account, Github Account
-# ❌ Don't allow creating a new person if their name already exists
-# ❌ When searching for a person, allow for a partial match against the person's name, or the full Slack Account or the full Github Account
-# ✅ If the person is found, show all their relevant information.
-# ✅ Show the information in a nice presentation.
-# ✅ If a person is not found, inform the user
-# ✅ When deleting a person, prompt for the name and search for an exact match. If found, delete the person, otherwise tell the user there wasn't a match.
-# ✅ Every time we add or delete an employee we should rewrite the employees.csv file
-# ✅ Create a new menu option that shows a report containing:
-#     --Show each employee and their details (name, phone, address, position, salary, slack account, github account)
-
 require "csv"
 
 @people = []
